@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
+import { ResearchArticle } from './research-articles/entities/research-article.entity';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { HealthModule } from './health/health.module';
       }),
     }),
     HealthModule,
+    ResearchArticle,
   ],
   controllers: [],
   providers: [],
