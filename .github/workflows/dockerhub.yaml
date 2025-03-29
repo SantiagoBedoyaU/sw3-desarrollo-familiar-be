@@ -26,5 +26,4 @@ jobs:
           api_token: ${{ secrets.KOYEB_API_TOKEN }}
       - name: deploy on koyeb
         run: |
-          koyeb service update escuelasfamiliares --docker-image ${{ secrets.DOCKERHUB_USERNAME }}/escuelasfamiliares:latest
-          koyeb service redeploy escuelasfamiliares
+          koyeb service redeploy hollow-allys/escuelasfamiliares
