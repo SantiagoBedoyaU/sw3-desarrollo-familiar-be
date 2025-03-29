@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 COPY tsconfig*.json ./
 COPY src ./src
 
-RUN npm ci && npm run build
+RUN npm install && npm run build
 
 FROM node:20-alpine
 
