@@ -8,7 +8,7 @@ on:
     types: ['closed']
 
 jobs:
-  publish_image:
+  publish_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -20,3 +20,11 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/escuelasfamiliares:latest
+      - name: install koyeb
+        uses: koyeb-community/koyeb-actions@v2
+        with:
+          api_token: ${{ secrets.KOYEB_API_TOKEN }}
+      - name: deploy on koyeb
+        run: |
+          koyeb service update escuelasfamiliares --docker-image ${{ secrets.DOCKERHUB_USERNAME }}/escuelasfamiliares:latest
+          koyeb service redeploy escuelasfamiliares
