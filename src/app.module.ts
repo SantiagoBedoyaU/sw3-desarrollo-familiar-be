@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
-import { ResearchArticle } from './research-articles/entities/research-article.entity';
+import { ResearchArticlesModule } from './research-articles/research-articles.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { ResearchArticle } from './research-articles/entities/research-article.e
     }),
     HealthModule,
     AuthModule,
-    ResearchArticle,
+    ResearchArticlesModule,
   ],
   controllers: [],
   providers: [],

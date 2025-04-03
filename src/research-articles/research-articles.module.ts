@@ -6,12 +6,14 @@ import {
   ResearchArticle,
   ResearchArticleSchema,
 } from './entities/research-article.entity';
+import { SupabaseModule } from 'src/supabase/supabase.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: ResearchArticle.name, schema: ResearchArticleSchema },
     ]),
+    SupabaseModule,
   ],
   controllers: [ResearchArticlesController],
   providers: [ResearchArticlesService],

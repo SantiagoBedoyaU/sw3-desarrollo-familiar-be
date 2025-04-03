@@ -3,7 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type ResearchArticleDocument = HydratedDocument<ResearchArticle>;
 
-@Schema()
+@Schema({
+  versionKey: false,
+})
 export class ResearchArticle {
   @Prop({
     unique: true,
@@ -27,8 +29,11 @@ export class ResearchArticle {
   })
   summary: string;
 
-  @Prop({ required: false })
-  fileAddress?: string;
+  @Prop({ required: true })
+  fileAddress: string;
+
+  @Prop({ default: 0 })
+  counter: number;
 }
 
 export const ResearchArticleSchema =
