@@ -1,3 +1,3 @@
 import { Reflector } from '@nestjs/core';
 
-export const Roles = Reflector.createDecorator<number[]>();
+export const AllowedRoles = Reflector.createDecorator<number[]>();

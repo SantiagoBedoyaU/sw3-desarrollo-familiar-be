@@ -19,8 +19,8 @@ export class AuthController {
     return this.authService.signIn(signInDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get('me')
+  @UseGuards(AuthGuard)
   async me(@Request() req) {
     return req.user;
   }
