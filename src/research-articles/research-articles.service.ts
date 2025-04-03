@@ -33,7 +33,7 @@ export class ResearchArticlesService {
 
     const [name, ext] = file.originalname.split('.');
     const now = Date.now().toString();
-    const filePath = `${createResearchArticleDto.thematicAxis}/${name}-${now}.${ext}`;
+    const filePath = `${createResearchArticleDto.primaryThematicAxis}/${name}-${now}.${ext}`;
     try {
       const fullPath = await this.supabaseService.uploadFileToBucket(
         this.bucketName,
@@ -46,7 +46,11 @@ export class ResearchArticlesService {
       throw new InternalServerErrorException('Fallo al subir el archivo');
     }
 
-    const createdResearchArticle = new this.model(createResearchArticleDto);
+    const createdResearchArticle = new this.model({
+      ...createResearchArticleDto,
+      keywords: createResearchArticleDto.keywords.split(','),
+      authors: createResearchArticleDto.authors.split(','),
+    });
     return createdResearchArticle.save();
   }
 

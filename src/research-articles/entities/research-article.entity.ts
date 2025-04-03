@@ -14,6 +14,11 @@ export class ResearchArticle {
   title: string;
 
   @Prop({
+    required: true,
+  })
+  year: string;
+
+  @Prop({
     type: [String],
     required: true,
   })
@@ -22,7 +27,17 @@ export class ResearchArticle {
   @Prop({
     required: true,
   })
-  thematicAxis: string;
+  primaryThematicAxis: string;
+
+  @Prop({
+    required: true,
+  })
+  secondaryThematicAxis: string;
+
+  @Prop({
+    required: true,
+  })
+  keywords: string[];
 
   @Prop({
     required: true,
