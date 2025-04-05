@@ -9,21 +9,28 @@ import { UpdateResearchArticleDto } from './dto/update-research-article.dto';
 import { SupabaseService } from 'src/supabase/supabase.service';
 import { ResearchArticleQueryParams } from './dto/research-article-query-params.dto';
 import { ResearchArticlesRepository } from './research-articles.repository';
+import { BaseService } from 'src/shared/service/base-service';
+import { ResearchArticle } from './entities/research-article.entity';
 
 @Injectable()
-export class ResearchArticlesService {
+export class ResearchArticlesService extends BaseService<
+  ResearchArticle,
+  ResearchArticlesRepository
+> {
   private readonly bucketName: string = 'research-articles';
   constructor(
-    private readonly repository: ResearchArticlesRepository,
+    private readonly researchArticleRepository: ResearchArticlesRepository,
     private readonly supabaseService: SupabaseService,
-  ) {}
+  ) {
+    super(researchArticleRepository);
+  }
 
-  async create(
+  async createAndUpload(
     createResearchArticleDto: CreateResearchArticleDto,
     file: Express.Multer.File,
   ) {
     // find existing article with same name
-    const exist = await this.repository.findOne({
+    const exist = await this.researchArticleRepository.findOne({
       title: createResearchArticleDto.title,
     });
     if (exist) {
@@ -45,11 +52,9 @@ export class ResearchArticlesService {
       throw new InternalServerErrorException('Fallo al subir el archivo');
     }
 
-    const createdResearchArticle = await this.repository.create({
-      ...createResearchArticleDto,
-      keywords: createResearchArticleDto.keywords.split(','),
-      authors: createResearchArticleDto.authors.split(','),
-    });
+    const createdResearchArticle = await this.researchArticleRepository.create(
+      createResearchArticleDto,
+    );
     return createdResearchArticle;
   }
 
@@ -81,19 +86,26 @@ export class ResearchArticlesService {
       query['year'] = queryParams.year;
     }
 
-    return this.repository.findAll(query, queryParams.limit, queryParams.page);
+    return this.researchArticleRepository.findAll(
+      query,
+      queryParams.limit,
+      queryParams.page,
+    );
   }
 
   async findOne(id: string) {
-    const result = await this.repository.findOne({ _id: id });
+    const result = await this.researchArticleRepository.findOne({ _id: id });
     if (result) {
-      await this.repository.update({ _id: id }, { $inc: { counter: 1 } });
+      await this.researchArticleRepository.update(
+        { _id: id },
+        { $inc: { counter: 1 } },
+      );
     }
     return result;
   }
 
   async download(id: string) {
-    const result = await this.repository.findOne({ _id: id });
+    const result = await this.researchArticleRepository.findOne({ _id: id });
     if (!result) {
       throw new NotFoundException('No se encontro el articulo');
     }
@@ -102,7 +114,7 @@ export class ResearchArticlesService {
         this.bucketName,
         result.fileAddress,
       );
-      await this.repository.update(
+      await this.researchArticleRepository.update(
         { _id: id },
         {
           $inc: { downloadCounter: 1 },
@@ -116,11 +128,14 @@ export class ResearchArticlesService {
   }
 
   update(id: string, updateResearchArticleDto: UpdateResearchArticleDto) {
-    return this.repository.update({ _id: id }, updateResearchArticleDto);
+    return this.researchArticleRepository.update(
+      { _id: id },
+      updateResearchArticleDto,
+    );
   }
 
   async remove(id: string) {
-    const result = await this.repository.findOne({ _id: id });
+    const result = await this.researchArticleRepository.findOne({ _id: id });
     if (!result) {
       throw new NotFoundException('No se encontro el articulo');
     }
@@ -133,6 +148,6 @@ export class ResearchArticlesService {
       console.log(error);
       throw new InternalServerErrorException('Fallo al borrar el articulo');
     }
-    return this.repository.delete({ _id: id });
+    return this.researchArticleRepository.delete({ _id: id });
   }
 }

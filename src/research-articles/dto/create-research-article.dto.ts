@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
-
 export class CreateResearchArticleDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -16,7 +16,10 @@ export class CreateResearchArticleDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  authors: string;
+  @Transform(({ value }) =>
+    value.split(',').map((author: string) => author.trim()),
+  )
+  authors: string[];
 
   @ApiProperty()
   @IsNotEmpty()
@@ -31,7 +34,10 @@ export class CreateResearchArticleDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  keywords: string;
+  @Transform(({ value }) =>
+    value.split(',').map((keyword: string) => keyword.trim()),
+  )
+  keywords: string[];
 
   @ApiProperty()
   @IsNotEmpty()

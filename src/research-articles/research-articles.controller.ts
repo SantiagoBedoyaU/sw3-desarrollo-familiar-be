@@ -31,7 +31,10 @@ export class ResearchArticlesController {
     @Body() createResearchArticleDto: CreateResearchArticleDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.researchArticlesService.create(createResearchArticleDto, file);
+    return this.researchArticlesService.createAndUpload(
+      createResearchArticleDto,
+      file,
+    );
   }
 
   @Get()

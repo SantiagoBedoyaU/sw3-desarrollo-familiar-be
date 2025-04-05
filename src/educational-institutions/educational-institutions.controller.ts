@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EducationalInstitutionsService } from './educational-institutions.service';
 import { CreateEducationalInstitutionDto } from './dto/create-educational-institution.dto';
 import { UpdateEducationalInstitutionDto } from './dto/update-educational-institution.dto';
+import { EducationalInstitutionQueryParams } from './dto/educational-institution-query-params.dto';
 
 @Controller('educational-institutions')
 export class EducationalInstitutionsController {
@@ -27,8 +29,12 @@ export class EducationalInstitutionsController {
   }
 
   @Get()
-  findAll() {
-    return this.educationalInstitutionsService.findAll();
+  findAll(@Query() queryParams: EducationalInstitutionQueryParams) {
+    return this.educationalInstitutionsService.findAll(
+      queryParams,
+      queryParams.limit,
+      queryParams.page,
+    );
   }
 
   @Get(':id')
