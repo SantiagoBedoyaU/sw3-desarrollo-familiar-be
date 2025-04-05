@@ -11,7 +11,9 @@ describe('ResearchArticlesController', () => {
       providers: [ResearchArticlesService],
     }).compile();
 
-    controller = module.get<ResearchArticlesController>(ResearchArticlesController);
+    controller = module.get<ResearchArticlesController>(
+      ResearchArticlesController,
+    );
   });
 
   it('should be defined', () => {
