@@ -24,8 +24,9 @@ export class UsersService {
     const randomNumbers = Math.floor(Math.random() * 1000);
     const password = `${usernamePart}${randomNumbers}`;
 
-    //Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //Hash the password whit salt
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     //save user to the database
     const newUser = new this.model({
@@ -36,9 +37,11 @@ export class UsersService {
     });
 
     try {
+        //first save the user to the database
+          await newUser.save();
+
           //Send email to the user with the password, whith the email and link of acces
           await this.mailService.sendWelcomeEmail(name, email, password);
-          await newUser.save();
           return{
             message: 'User created successfully',
             user:{
@@ -50,7 +53,7 @@ export class UsersService {
  
     } catch (error) {
       
-      throw new BadRequestException('dont create user or send email');
+      throw new BadRequestException('dont email sent', error.message);
       
     }
 

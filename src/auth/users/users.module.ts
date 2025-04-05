@@ -9,7 +9,8 @@ import { MailModule } from 'src/mail/mail.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    JwtModule,  MailModule
+    JwtModule,
+    MailModule
   ],
   controllers: [UsersController],
   providers: [UsersService],

@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { MailerSend, Recipient, EmailParams} from 'mailersend';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { MailerSend, Recipient, EmailParams } from 'mailersend';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
   private mailerSend: MailerSend;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.mailerSend = new MailerSend({
-      apiKey: process.env.MAILSEND_KEY,
+      apiKey: this.configService.get<string>('MAILSEND_KEY'),
     });
   }
 
   async sendWelcomeEmail(name: string, email: string, password: string) {
     const emailParams = new EmailParams()
       .setFrom({
-        email: 'noreply@test-r83ql3pw3v0gzw1j.mlsender.net',
+        email: this.configService.get<string>('EMAIL_FROM'),
         name: 'Escuelas Familiares',
       })
       .setTo([new Recipient(email, name)])
       .setSubject('Bienvenido')
-      .setTemplateId(process.env.TEMPLATE_ID)
+      .setTemplateId(this.configService.get<string>('TEMPLATE_ID'))
       .setPersonalization([
         {
           email: email,
@@ -32,13 +31,12 @@ export class MailService {
           },
         },
       ]);
-  
+
     try {
       await this.mailerSend.email.send(emailParams);
-      console.log('✅ Correo enviado correctamente');
+      console.log('✅ Email sent successfully!');
     } catch (error) {
-      
-      throw new Error('No se pudo enviar el correo');
+      throw new Error('Failed to send email: ' + error.message);
     }
   }
 }
