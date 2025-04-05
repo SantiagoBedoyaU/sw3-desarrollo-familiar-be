@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import { MailService } from '../../mail/mail.service';
 import * as bcrypt from 'bcrypt';
-import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
@@ -15,9 +15,8 @@ export class UsersService {
     private readonly mailService: MailService,
   ) {}
 
-
   async create(createUserDto: CreateUserDto) {
-    const {name, email, role} = createUserDto;
+    const { name, email, role } = createUserDto;
 
     //Generate a  password
     const usernamePart = email.split('@')[0];
@@ -33,33 +32,26 @@ export class UsersService {
       name,
       email,
       password: hashedPassword,
-      role
+      role,
     });
 
     try {
-        //first save the user to the database
-          await newUser.save();
+      //first save the user to the database
+      await newUser.save();
 
-          //Send email to the user with the password, whith the email and link of acces
-          await this.mailService.sendWelcomeEmail(name, email, password);
-          return{
-            message: 'User created successfully',
-            user:{
-              name : newUser.name,
-              email: newUser.email,
-              role : newUser.role,
-            }
-          }
- 
+      //Send email to the user with the password, whith the email and link of acces
+      await this.mailService.sendWelcomeEmail(name, email, password);
+      return {
+        message: 'User created successfully',
+        user: {
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+        },
+      };
     } catch (error) {
-      
       throw new BadRequestException('dont email sent', error.message);
-      
     }
-
-
-
-
   }
 
   async findAll() {}
@@ -73,6 +65,7 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto);
     return `This action updates a #${id} user`;
   }
 
