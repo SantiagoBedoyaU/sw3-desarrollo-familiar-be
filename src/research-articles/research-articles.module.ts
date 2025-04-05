@@ -7,6 +7,7 @@ import {
   ResearchArticleSchema,
 } from './entities/research-article.entity';
 import { SupabaseModule } from 'src/supabase/supabase.module';
+import { ResearchArticlesRepository } from './research-articles.repository';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { SupabaseModule } from 'src/supabase/supabase.module';
     SupabaseModule,
   ],
   controllers: [ResearchArticlesController],
-  providers: [ResearchArticlesService],
+  providers: [ResearchArticlesService, ResearchArticlesRepository],
 })
 export class ResearchArticlesModule {}

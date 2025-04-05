@@ -10,12 +10,14 @@ import {
   UploadedFile,
   Header,
   Res,
+  Query,
 } from '@nestjs/common';
 import { ResearchArticlesService } from './research-articles.service';
 import { CreateResearchArticleDto } from './dto/create-research-article.dto';
 import { UpdateResearchArticleDto } from './dto/update-research-article.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
+import { ResearchArticleQueryParams } from './dto/research-article-query-params.dto';
 
 @Controller('research-articles')
 export class ResearchArticlesController {
@@ -33,8 +35,8 @@ export class ResearchArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.researchArticlesService.findAll();
+  findAll(@Query() queryParams: ResearchArticleQueryParams) {
+    return this.researchArticlesService.findAll(queryParams);
   }
 
   @Get(':id')
