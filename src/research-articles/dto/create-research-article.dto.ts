@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 export class CreateResearchArticleDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -10,12 +10,16 @@ export class CreateResearchArticleDto {
   @ApiProperty()
   @IsString()
   @MinLength(4)
+  @MaxLength(4)
   year: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  authors: string;
+  @Transform(({ value }) =>
+    value.split(',').map((author: string) => author.trim()),
+  )
+  authors: string[];
 
   @ApiProperty()
   @IsNotEmpty()
@@ -30,10 +34,15 @@ export class CreateResearchArticleDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  keywords: string;
+  @Transform(({ value }) =>
+    value.split(',').map((keyword: string) => keyword.trim()),
+  )
+  keywords: string[];
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   summary: string;
+
   fileAddress?: string;
 }

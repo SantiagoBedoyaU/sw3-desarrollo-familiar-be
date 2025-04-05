@@ -45,10 +45,13 @@ export class ResearchArticle {
   summary: string;
 
   @Prop({ required: true })
-  fileAddress: string;
+  fileAddress?: string;
 
   @Prop({ default: 0 })
-  counter: number;
+  counter?: number;
+
+  @Prop({ default: 0 })
+  downloadCounter?: number;
 }
 
 export const ResearchArticleSchema =
