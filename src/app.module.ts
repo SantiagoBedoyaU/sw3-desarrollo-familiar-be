@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
 import { ResearchArticlesModule } from './research-articles/research-articles.module';
+import { EducationalInstitutionsModule } from './educational-institutions/educational-institutions.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ResearchArticlesModule } from './research-articles/research-articles.mo
     HealthModule,
     AuthModule,
     ResearchArticlesModule,
+    EducationalInstitutionsModule,
   ],
   controllers: [],
   providers: [],
