@@ -45,8 +45,12 @@ export class ResearchArticle {
   })
   summary: string;
 
-  @Prop({ type: mongoose.Schema.ObjectId, ref: 'PracticeReport' })
-  practiceReport: PracticeReport | any;
+  @Prop({
+    type: mongoose.Schema.ObjectId,
+    ref: 'PracticeReport',
+    required: false,
+  })
+  practiceReport?: PracticeReport | any;
 
   @Prop()
   fileAddress?: string;
