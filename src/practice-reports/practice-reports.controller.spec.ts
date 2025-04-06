@@ -11,7 +11,9 @@ describe('PracticeReportsController', () => {
       providers: [PracticeReportsService],
     }).compile();
 
-    controller = module.get<PracticeReportsController>(PracticeReportsController);
+    controller = module.get<PracticeReportsController>(
+      PracticeReportsController,
+    );
   });
 
   it('should be defined', () => {
