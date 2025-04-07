@@ -1,11 +1,12 @@
 // src/users/users.service.ts
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { BaseService } from 'src/shared/service/base-service';
 import { User } from './entities/user.entity';
 import { UsersRepository } from 'src/auth/users/users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
+import { UserQueryParamsDto } from './dto/user-query-params.dto';
 
 @Injectable()
 export class UsersService extends BaseService<User, UsersRepository> {
@@ -32,15 +33,14 @@ export class UsersService extends BaseService<User, UsersRepository> {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = {
-      name,
-      email,
-      password: hashedPassword,
-      role,
-    };
+    const newUser = new User();
+    newUser.name = name;
+    newUser.email = email;
+    newUser.password = hashedPassword;
+    newUser.role = role;
 
     try {
-      await this.usersRepository.create(newUser as User);
+      await this.usersRepository.create(newUser);
       await this.mailService.sendWelcomeEmail(name, email, password);
 
       return {
@@ -52,11 +52,21 @@ export class UsersService extends BaseService<User, UsersRepository> {
         },
       };
     } catch (error) {
-      throw new BadRequestException('Error creating user', error.message);
+      throw new InternalServerErrorException('Error creating user', error.message);
     }
   }
 
   async findOneByEmail(email: string) {
     return this.usersRepository.findOneByEmail(email);
+  }
+
+  async findAll(query: UserQueryParamsDto) {
+    const { page = 1, limit = 10, name, email } = query;
+  
+    const filter: any = {};
+    if (name) filter.name = { $regex: name, $options: 'i' };
+    if (email) filter.email = { $regex: email, $options: 'i' };
+  
+    return super.findAll(filter, limit, page);
   }
 }
