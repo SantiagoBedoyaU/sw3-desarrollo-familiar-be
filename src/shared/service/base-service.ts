@@ -16,7 +16,7 @@ export abstract class BaseService<T, J extends BaseRepository<T>> {
     return this.repository.findOne({ _id: id });
   }
 
-  update(id: string, data: T) {
+  update(id: string, data: Partial<T>) {
     return this.repository.update({ _id: id }, data);
   }
 

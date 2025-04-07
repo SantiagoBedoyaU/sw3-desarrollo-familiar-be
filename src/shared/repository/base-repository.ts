@@ -1,7 +1,7 @@
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 export abstract class BaseRepository<T> {
-  constructor(private readonly model: Model<T>) {}
+  constructor(protected readonly model: Model<T>) {}
 
   async create(doc: Omit<T, '_id'>): Promise<T | any> {
     const createdDoc = new this.model(doc);

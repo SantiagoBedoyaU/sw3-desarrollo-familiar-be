@@ -1,75 +1,62 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectModel } from '@nestjs/mongoose';
+// src/users/users.service.ts
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { BaseService } from 'src/shared/service/base-service';
 import { User } from './entities/user.entity';
-import { Model } from 'mongoose';
-import { MailService } from '../../mail/mail.service';
+import { UsersRepository } from 'src/auth/users/users.repository';
+import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { BadRequestException } from '@nestjs/common';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
-export class UsersService {
+export class UsersService extends BaseService<User, UsersRepository> {
   constructor(
-    @InjectModel(User.name) private model: Model<User>,
+    private readonly usersRepository: UsersRepository,
     private readonly mailService: MailService,
-  ) {}
+  ) {
+    super(usersRepository);
+  }
 
   async create(createUserDto: CreateUserDto) {
     const { name, email, role } = createUserDto;
 
-    //Generate a  password
+    //validate email not registered
+    const existingUser = await this.usersRepository.findOneByEmail(email);
+    if (existingUser) {
+      throw new BadRequestException('Email already registered');
+    }
+
     const usernamePart = email.split('@')[0];
     const randomNumbers = Math.floor(Math.random() * 1000);
     const password = `${usernamePart}${randomNumbers}`;
 
-    //Hash the password whit salt
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    //save user to the database
-    const newUser = new this.model({
+    const newUser = {
       name,
       email,
       password: hashedPassword,
       role,
-    });
+    };
 
     try {
-      //first save the user to the database
-      await newUser.save();
-
-      //Send email to the user with the password, whith the email and link of acces
+      await this.usersRepository.create(newUser as User);
       await this.mailService.sendWelcomeEmail(name, email, password);
+
       return {
         message: 'User created successfully',
         user: {
-          name: newUser.name,
-          email: newUser.email,
-          role: newUser.role,
+          name,
+          email,
+          role,
         },
       };
     } catch (error) {
-      throw new BadRequestException('dont email sent', error.message);
+      throw new BadRequestException('Error creating user', error.message);
     }
   }
 
-  async findAll() {}
-
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
-  }
-
-  findOneByEmail(email: string) {
-    return this.model.findOne({ email });
-  }
-
-  update(id: string, updateUserDto: UpdateUserDto) {
-    console.log(updateUserDto);
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async findOneByEmail(email: string) {
+    return this.usersRepository.findOneByEmail(email);
   }
 }
