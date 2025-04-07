@@ -11,7 +11,6 @@ export class UsersRepository extends BaseRepository<User> {
     super(model);
   }
 
-  
   findOneByEmail(email: string) {
     return this.model.findOne({ email }).exec();
   }
