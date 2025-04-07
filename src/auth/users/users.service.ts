@@ -1,5 +1,9 @@
 // src/users/users.service.ts
-import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { BaseService } from 'src/shared/service/base-service';
 import { User } from './entities/user.entity';
 import { UsersRepository } from 'src/auth/users/users.repository';
@@ -52,7 +56,10 @@ export class UsersService extends BaseService<User, UsersRepository> {
         },
       };
     } catch (error) {
-      throw new InternalServerErrorException('Error creating user', error.message);
+      throw new InternalServerErrorException(
+        'Error creating user',
+        error.message,
+      );
     }
   }
 
@@ -62,11 +69,11 @@ export class UsersService extends BaseService<User, UsersRepository> {
 
   async findAll(query: UserQueryParamsDto) {
     const { page = 1, limit = 10, name, email } = query;
-  
+
     const filter: any = {};
     if (name) filter.name = { $regex: name, $options: 'i' };
     if (email) filter.email = { $regex: email, $options: 'i' };
-  
+
     return super.findAll(filter, limit, page);
   }
 }
