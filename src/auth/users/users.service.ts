@@ -68,7 +68,7 @@ export class UsersService extends BaseService<User, UsersRepository> {
   }
 
   async findAll(query: UserQueryParamsDto) {
-    const { page = 1, limit = 10, name, email } = query;
+    const { page, limit, name, email } = query;
 
     const filter: any = {};
     if (name) filter.name = { $regex: name, $options: 'i' };
