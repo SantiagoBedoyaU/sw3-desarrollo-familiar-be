@@ -6,10 +6,10 @@ import {
 } from '@nestjs/common';
 import { CreateResearchArticleDto } from './dto/create-research-article.dto';
 import { UpdateResearchArticleDto } from './dto/update-research-article.dto';
-import { SupabaseService } from 'src/supabase/supabase.service';
+import { SupabaseService } from '../supabase/supabase.service';
 import { ResearchArticleQueryParams } from './dto/research-article-query-params.dto';
 import { ResearchArticlesRepository } from './research-articles.repository';
-import { BaseService } from 'src/shared/service/base-service';
+import { BaseService } from '../shared/service/base-service';
 import { ResearchArticle } from './entities/research-article.entity';
 
 @Injectable()

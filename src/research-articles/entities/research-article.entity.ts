@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { PracticeReport } from 'src/practice-reports/entities/practice-report.entity';
 
 export type ResearchArticleDocument = HydratedDocument<ResearchArticle>;
 
@@ -44,7 +45,14 @@ export class ResearchArticle {
   })
   summary: string;
 
-  @Prop({ required: true })
+  @Prop({
+    type: mongoose.Schema.ObjectId,
+    ref: 'PracticeReport',
+    required: false,
+  })
+  practiceReport?: PracticeReport | any;
+
+  @Prop()
   fileAddress?: string;
 
   @Prop({ default: 0 })
