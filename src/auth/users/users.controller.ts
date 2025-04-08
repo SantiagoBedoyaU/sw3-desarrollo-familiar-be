@@ -15,6 +15,8 @@ import { AllowedRoles } from '../decorators/roles.decorator';
 import { Roles } from './entities/user.entity';
 import { AuthGuard } from '../guard/auth.guard';
 import { RolesGuard } from '../guard/role.guard';
+import { Query } from '@nestjs/common';
+import { UserQueryParamsDto } from './dto/user-query-params.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,8 +30,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query() query: UserQueryParamsDto) {
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')
