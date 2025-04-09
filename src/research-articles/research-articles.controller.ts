@@ -42,6 +42,11 @@ export class ResearchArticlesController {
     return this.researchArticlesService.findAll(queryParams);
   }
 
+  @Get('/top-5')
+  getTop5() {
+    return this.researchArticlesService.getTop5();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.researchArticlesService.findOne(id);
