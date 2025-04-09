@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateResearchArticleDto {
   @ApiProperty()
@@ -42,9 +48,9 @@ export class CreateResearchArticleDto {
   @IsString()
   summary: string;
 
-  // @ApiProperty()
-  // @IsNotEmpty()
-  // @IsString()
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
   practiceReport?: string;
 
   fileAddress?: string;
