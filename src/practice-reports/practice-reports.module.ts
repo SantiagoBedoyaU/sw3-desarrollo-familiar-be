@@ -11,7 +11,6 @@ import { PracticeReportsRepository } from './practice-reports.repository';
 
 import { SupabaseModule } from '../supabase/supabase.module';
 import { EducationalInstitutionsModule } from '../educational-institutions/educational-institutions.module';
-import { ResearchArticlesModule } from '../research-articles/research-articles.module';
 
 @Module({
   imports: [
