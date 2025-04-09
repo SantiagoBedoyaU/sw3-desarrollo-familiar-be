@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ResearchArticlesModule } from './research-articles/research-articles.module';
 import { EducationalInstitutionsModule } from './educational-institutions/educational-institutions.module';
 import { PracticeReportsModule } from './practice-reports/practice-reports.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PracticeReportsModule } from './practice-reports/practice-reports.modul
     ResearchArticlesModule,
     EducationalInstitutionsModule,
     PracticeReportsModule,
+    ReportsModule,
   ],
   controllers: [],
   providers: [],

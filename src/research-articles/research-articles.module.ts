@@ -20,5 +20,6 @@ import { PracticeReportsModule } from 'src/practice-reports/practice-reports.mod
   ],
   controllers: [ResearchArticlesController],
   providers: [ResearchArticlesService, ResearchArticlesRepository],
+  exports: [ResearchArticlesService, ResearchArticlesRepository],
 })
 export class ResearchArticlesModule {}
