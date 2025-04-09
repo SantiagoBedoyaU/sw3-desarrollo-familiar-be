@@ -12,4 +12,11 @@ export class ResearchArticlesRepository extends BaseRepository<ResearchArticle> 
   ) {
     super(researchArticleModel);
   }
+  getTop5() {
+    return this.researchArticleModel
+      .find()
+      .sort({ counter: -1, downloadCounter: -1 })
+      .limit(5)
+      .exec();
+  }
 }

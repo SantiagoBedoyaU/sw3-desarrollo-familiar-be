@@ -150,4 +150,7 @@ export class ResearchArticlesService extends BaseService<
     }
     return this.researchArticleRepository.delete({ _id: id });
   }
+  getTop5() {
+    return this.researchArticleRepository.getTop5();
+  }
 }
