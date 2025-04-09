@@ -9,6 +9,7 @@ import {
 import { SupabaseModule } from 'src/supabase/supabase.module';
 import { ResearchArticlesRepository } from './research-articles.repository';
 import { PracticeReportsModule } from 'src/practice-reports/practice-reports.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PracticeReportsModule } from 'src/practice-reports/practice-reports.mod
     ]),
     SupabaseModule,
     PracticeReportsModule,
+    JwtModule,
   ],
   controllers: [ResearchArticlesController],
   providers: [ResearchArticlesService, ResearchArticlesRepository],
