@@ -41,8 +41,11 @@ export class PracticeReportsService extends BaseService<
     }
 
     const [name, ext] = file.originalname.split('.');
-    const now = Date.now().toString();
-    const filePath = `${createPracticeReportDto.primaryThematicAxis}/${name}-${now}.${ext}`;
+    const filePath = this.sanitizeAndGetFilePath(
+      createPracticeReportDto.primaryThematicAxis,
+      name,
+      ext,
+    );
 
     try {
       const fullPath = await this.supabaseService.uploadFileToBucket(
@@ -183,5 +186,23 @@ export class PracticeReportsService extends BaseService<
     }
 
     return this.practiceReportsRepository.delete({ _id: id });
+  }
+
+  sanitizeAndGetFilePath(
+    primaryThematicAxis: string,
+    name: string,
+    ext: string,
+  ): string {
+    const now = Date.now().toString();
+    const sanitize = (text: string): string =>
+      text
+        .normalize('NFD') // Separa letras de sus tildes
+        .replace(/[\u0300-\u036f]/g, '') // Elimina las tildes
+        .replace(/ñ/g, 'n') // Reemplaza ñ
+        .replace(/Ñ/g, 'N') // Reemplaza Ñ
+        .replace(/[^a-zA-Z0-9-_]/g, '_'); // Reemplaza cualquier otro carácter raro
+    const axis = sanitize(primaryThematicAxis);
+    const fileName = sanitize(name);
+    return `${axis}/${fileName}-${now}.${ext}`;
   }
 }
