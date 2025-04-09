@@ -22,5 +22,6 @@ import { EducationalInstitutionsModule } from '../educational-institutions/educa
   ],
   controllers: [PracticeReportsController],
   providers: [PracticeReportsService, PracticeReportsRepository],
+  exports: [PracticeReportsService, PracticeReportsRepository],
 })
 export class PracticeReportsModule {}

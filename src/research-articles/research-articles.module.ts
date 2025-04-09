@@ -8,6 +8,7 @@ import {
 } from './entities/research-article.entity';
 import { SupabaseModule } from 'src/supabase/supabase.module';
 import { ResearchArticlesRepository } from './research-articles.repository';
+import { PracticeReportsModule } from 'src/practice-reports/practice-reports.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ResearchArticlesRepository } from './research-articles.repository';
       { name: ResearchArticle.name, schema: ResearchArticleSchema },
     ]),
     SupabaseModule,
+    PracticeReportsModule,
   ],
   controllers: [ResearchArticlesController],
   providers: [ResearchArticlesService, ResearchArticlesRepository],

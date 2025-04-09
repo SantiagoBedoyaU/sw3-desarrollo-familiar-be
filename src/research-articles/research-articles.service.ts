@@ -11,6 +11,7 @@ import { ResearchArticleQueryParams } from './dto/research-article-query-params.
 import { ResearchArticlesRepository } from './research-articles.repository';
 import { BaseService } from '../shared/service/base-service';
 import { ResearchArticle } from './entities/research-article.entity';
+import { PracticeReportsRepository } from 'src/practice-reports/practice-reports.repository';
 
 @Injectable()
 export class ResearchArticlesService extends BaseService<
@@ -20,6 +21,7 @@ export class ResearchArticlesService extends BaseService<
   private readonly bucketName: string = 'research-articles';
   constructor(
     private readonly researchArticleRepository: ResearchArticlesRepository,
+    private readonly practiceReportRepository: PracticeReportsRepository,
     private readonly supabaseService: SupabaseService,
   ) {
     super(researchArticleRepository);
@@ -35,6 +37,18 @@ export class ResearchArticlesService extends BaseService<
     });
     if (exist) {
       throw new BadRequestException('Ya existe un articulo con este titulo');
+    }
+
+    // in case practice report comming in data
+    if (createResearchArticleDto.practiceReport) {
+      const existPracticeReport = await this.practiceReportRepository.findOne({
+        _id: createResearchArticleDto.practiceReport,
+      });
+      if (!existPracticeReport) {
+        throw new BadRequestException(
+          'No se encontro el informe de practica asociado',
+        );
+      }
     }
 
     const [name, ext] = file.originalname.split('.');
