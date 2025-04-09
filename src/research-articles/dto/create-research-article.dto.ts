@@ -16,7 +16,6 @@ export class CreateResearchArticleDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
   @Transform(({ value }) =>
     value.split(',').map((author: string) => author.trim()),
   )
@@ -28,13 +27,11 @@ export class CreateResearchArticleDto {
   primaryThematicAxis: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
   secondaryThematicAxis: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
   @Transform(({ value }) =>
     value.split(',').map((keyword: string) => keyword.trim()),
   )
@@ -45,10 +42,10 @@ export class CreateResearchArticleDto {
   @IsString()
   summary: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  practiceReport: string;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsString()
+  practiceReport?: string;
 
   fileAddress?: string;
 }
