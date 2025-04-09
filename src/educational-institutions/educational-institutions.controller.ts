@@ -30,10 +30,8 @@ export class EducationalInstitutionsController {
 
   @Get()
   findAll(@Query() queryParams: EducationalInstitutionQueryParams) {
-    return this.educationalInstitutionsService.findAll(
-      { name: { $regex: queryParams.name, $options: 'i' } },
-      queryParams.limit,
-      queryParams.page,
+    return this.educationalInstitutionsService.findAllWithPracticeReportCount(
+      queryParams,
     );
   }
 
