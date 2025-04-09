@@ -52,8 +52,11 @@ export class ResearchArticlesService extends BaseService<
     }
 
     const [name, ext] = file.originalname.split('.');
-    const now = Date.now().toString();
-    const filePath = `${createResearchArticleDto.primaryThematicAxis}/${name}-${now}.${ext}`;
+    const filePath = this.sanitizeAndGetFilePath(
+      createResearchArticleDto.primaryThematicAxis,
+      name,
+      ext,
+    );
     try {
       const fullPath = await this.supabaseService.uploadFileToBucket(
         this.bucketName,
@@ -70,6 +73,24 @@ export class ResearchArticlesService extends BaseService<
       createResearchArticleDto,
     );
     return createdResearchArticle;
+  }
+
+  sanitizeAndGetFilePath(
+    primaryThematicAxis: string,
+    name: string,
+    ext: string,
+  ) {
+    const now = Date.now().toString();
+    const sanitize = (text: string): string =>
+      text
+        .normalize('NFD') // Separa letras de sus tildes
+        .replace(/[\u0300-\u036f]/g, '') // Elimina las tildes
+        .replace(/ñ/g, 'n') // Reemplaza ñ
+        .replace(/Ñ/g, 'N') // Reemplaza Ñ
+        .replace(/[^a-zA-Z0-9-_]/g, '_');
+    const axis = sanitize(primaryThematicAxis);
+    const fileName = sanitize(name);
+    return `${axis}/${fileName}-${now}.${ext}`;
   }
 
   findAll(queryParams: ResearchArticleQueryParams) {
