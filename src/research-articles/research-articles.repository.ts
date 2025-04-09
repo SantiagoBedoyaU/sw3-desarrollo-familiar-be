@@ -19,4 +19,18 @@ export class ResearchArticlesRepository extends BaseRepository<ResearchArticle> 
       .limit(5)
       .exec();
   }
+  getMostDownloadedArticle() {
+    return this.researchArticleModel
+      .find()
+      .sort({ downloadCounter: -1 })
+      .limit(1)
+      .exec();
+  }
+  getMostViewedArticle() {
+    return this.researchArticleModel
+      .find()
+      .sort({ counter: -1 })
+      .limit(1)
+      .exec();
+  }
 }

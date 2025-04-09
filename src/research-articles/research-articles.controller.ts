@@ -11,6 +11,7 @@ import {
   Header,
   Res,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ResearchArticlesService } from './research-articles.service';
 import { CreateResearchArticleDto } from './dto/create-research-article.dto';
@@ -18,6 +19,7 @@ import { UpdateResearchArticleDto } from './dto/update-research-article.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { ResearchArticleQueryParams } from './dto/research-article-query-params.dto';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
 @Controller('research-articles')
 export class ResearchArticlesController {
@@ -26,6 +28,7 @@ export class ResearchArticlesController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   create(
     @Body() createResearchArticleDto: CreateResearchArticleDto,
@@ -65,6 +68,7 @@ export class ResearchArticlesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateResearchArticleDto: UpdateResearchArticleDto,
@@ -73,6 +77,7 @@ export class ResearchArticlesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.researchArticlesService.remove(id);
   }
