@@ -125,6 +125,11 @@ export class PracticeReportsService extends BaseService<
       throw new NotFoundException('Practice report not found');
     }
 
+    await this.practiceReportsRepository.update(
+      { _id: id },
+      { $inc: { counter: 1 } },
+    );
+
     return result;
   }
 

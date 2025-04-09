@@ -7,16 +7,20 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePracticeReportDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   title: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  period: string; // ejemplo: "2025-1"
+  period: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsArray()
   @Transform(({ value }) => {
@@ -27,6 +31,7 @@ export class CreatePracticeReportDto {
   })
   authors: string[];
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsArray()
   @Transform(({ value }) => {
@@ -37,21 +42,26 @@ export class CreatePracticeReportDto {
   })
   keywords: string[];
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   primaryThematicAxis: string;
 
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   secondaryThematicAxis?: string;
 
+  @ApiProperty()
   @IsMongoId()
   @IsNotEmpty()
   institutionId: string;
 
+  @ApiPropertyOptional()
   @IsOptional()
   researchArticle?: Types.ObjectId;
 
+  @ApiProperty()
   @IsOptional()
   fileAddress?: string;
 }

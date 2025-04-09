@@ -18,7 +18,7 @@ export class PracticeReport {
   @Prop({
     required: true,
   })
-  period: string; // example: "2025-1"
+  period: string;
 
   @Prop({
     type: [String],
