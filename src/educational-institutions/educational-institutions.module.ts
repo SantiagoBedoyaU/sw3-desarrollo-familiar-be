@@ -22,6 +22,5 @@ import {
     EducationalInstitutionsService,
     EducationalInstitutionsRepository,
   ],
-  exports: [EducationalInstitutionsRepository],
 })
 export class EducationalInstitutionsModule {}

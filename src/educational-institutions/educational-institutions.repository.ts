@@ -12,8 +12,4 @@ export class EducationalInstitutionsRepository extends BaseRepository<Educationa
   ) {
     super(educationalInstitutionModel);
   }
-
-  async findById(id: string) {
-    return this.educationalInstitutionModel.findById(id);
-  }
 }
