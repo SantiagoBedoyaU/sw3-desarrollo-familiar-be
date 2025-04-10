@@ -11,6 +11,7 @@ import {
   Header,
   Res,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PracticeReportsService } from './practice-reports.service';
 import { CreatePracticeReportDto } from './dto/create-practice-report.dto';
@@ -18,6 +19,7 @@ import { UpdatePracticeReportDto } from './dto/update-practice-report.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PracticeReportQueryParams } from './dto/practice-reports-query-params.dto';
 import { Response } from 'express';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
 @Controller('practice-reports')
 export class PracticeReportsController {
@@ -26,6 +28,7 @@ export class PracticeReportsController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async create(
     @Body() createPracticeReportDTO: CreatePracticeReportDto,
@@ -42,12 +45,18 @@ export class PracticeReportsController {
     return this.practiceReportsService.findAll(queryParams);
   }
 
+  @Get('/top-5')
+  getTop5Featured() {
+    return this.practiceReportsService.getTop5();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.practiceReportsService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body() updatePracticeReportDto: UpdatePracticeReportDto,
@@ -56,6 +65,7 @@ export class PracticeReportsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   async remove(@Param('id') id: string) {
     await this.practiceReportsService.remove(id);
     return {
