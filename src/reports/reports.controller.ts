@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 
@@ -15,6 +15,6 @@ export class ReportsController {
   @Get('/practice-reports')
   @UseGuards(AuthGuard)
   getPracticeReportsReport() {
-  return this.reportsService.getPracticeReportsReport();
-}
+    return this.reportsService.getPracticeReportsReport();
+  }
 }

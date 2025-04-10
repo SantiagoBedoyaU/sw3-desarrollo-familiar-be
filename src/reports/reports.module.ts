@@ -6,7 +6,7 @@ import { PracticeReportsModule } from 'src/practice-reports/practice-reports.mod
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [ResearchArticlesModule, PracticeReportsModule,  JwtModule],
+  imports: [ResearchArticlesModule, PracticeReportsModule, JwtModule],
   controllers: [ReportsController],
   providers: [ReportsService],
 })

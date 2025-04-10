@@ -24,7 +24,7 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
   async getMostInteractedReports() {
     return this.practiceReportModel
       .find()
-      .sort({ interactions: -1 }) 
+      .sort({ interactions: -1 })
       .limit(5)
       .exec();
   }
@@ -32,7 +32,7 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
   async getMostDownloadedReports() {
     return this.practiceReportModel
       .find()
-      .sort({ downloadCounter: -1 }) 
+      .sort({ downloadCounter: -1 })
       .limit(5)
       .exec();
   }
