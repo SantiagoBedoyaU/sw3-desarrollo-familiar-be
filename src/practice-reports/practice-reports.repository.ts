@@ -12,4 +12,12 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
   ) {
     super(practiceReportModel);
   }
+
+  getTop5() {
+    return this.practiceReportModel
+      .find()
+      .sort({ downloadCounter: -1, counter: -1 })
+      .limit(5)
+      .exec();
+  }
 }

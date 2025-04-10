@@ -205,4 +205,8 @@ export class PracticeReportsService extends BaseService<
     const fileName = sanitize(name);
     return `${axis}/${fileName}-${now}.${ext}`;
   }
+
+  getTop5() {
+    return this.practiceReportsRepository.getTop5();
+  }
 }

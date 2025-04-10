@@ -11,6 +11,7 @@ import { PracticeReportsRepository } from './practice-reports.repository';
 
 import { SupabaseModule } from '../supabase/supabase.module';
 import { EducationalInstitutionsModule } from '../educational-institutions/educational-institutions.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { EducationalInstitutionsModule } from '../educational-institutions/educa
     ]),
     SupabaseModule,
     EducationalInstitutionsModule,
+    JwtModule,
   ],
   controllers: [PracticeReportsController],
   providers: [PracticeReportsService, PracticeReportsRepository],
