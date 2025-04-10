@@ -95,6 +95,12 @@ export class ResearchArticlesService extends BaseService<
 
   findAll(queryParams: ResearchArticleQueryParams) {
     const query = {};
+    if (queryParams.title) {
+      query['title'] = {
+        $regex: queryParams.title,
+        $options: 'i',
+      };
+    }
     if (queryParams.authors) {
       query['authors'] = {
         $in: queryParams.authors.split(',').map((author) => author.trim()),
