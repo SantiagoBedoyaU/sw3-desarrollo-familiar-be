@@ -7,10 +7,10 @@ export class ReportsService {
     private readonly researchArticleRepository: ResearchArticlesRepository,
   ) {}
   async getResearchArticlesReport() {
-    const mostDownloadArticle =
-      await this.researchArticleRepository.getMostDownloadedArticle();
-    const mostViewedArticle =
-      await this.researchArticleRepository.getMostViewedArticle();
+    const [mostDownloadArticle, mostViewedArticle] = await Promise.all([
+      this.researchArticleRepository.getMostDownloadedArticle(),
+      this.researchArticleRepository.getMostViewedArticle(),
+    ]);
 
     return {
       mostViewed: mostViewedArticle[0],
