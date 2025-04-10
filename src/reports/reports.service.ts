@@ -21,10 +21,10 @@ export class ReportsService {
   }
 
   async getPracticeReportsReport() {
-    const mostDownloadedReports =
-      await this.practiceReportsRepository.getMostDownloadedReports();
-    const mostInteractedReports =
-      await this.practiceReportsRepository.getMostInteractedReports();
+    const [mostDownloadedReports, mostInteractedReports] = await Promise.all([
+      this.practiceReportsRepository.getMostDownloadedReports(),
+      this.practiceReportsRepository.getMostInteractedReports(),
+    ]);
 
     return {
       mostDownloaded: mostDownloadedReports[0],
