@@ -24,7 +24,7 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
   async getMostInteractedReports() {
     return this.practiceReportModel
       .find()
-      .sort({ interactions: -1 })
+      .sort({ counter: -1 })
       .limit(5)
       .exec();
   }
