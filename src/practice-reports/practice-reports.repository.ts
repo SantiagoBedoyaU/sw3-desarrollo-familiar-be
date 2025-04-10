@@ -20,4 +20,20 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
       .limit(5)
       .exec();
   }
+
+  async getMostInteractedReports() {
+    return this.practiceReportModel
+      .find()
+      .sort({ counter: -1 })
+      .limit(5)
+      .exec();
+  }
+
+  async getMostDownloadedReports() {
+    return this.practiceReportModel
+      .find()
+      .sort({ downloadCounter: -1 })
+      .limit(5)
+      .exec();
+  }
 }
