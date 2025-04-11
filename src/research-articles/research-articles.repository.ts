@@ -33,4 +33,45 @@ export class ResearchArticlesRepository extends BaseRepository<ResearchArticle> 
       .limit(1)
       .exec();
   }
+
+  getThematicAxisCount() {
+    // group research articles by primaryThematicAxis and by secondaryThematicAxis and count
+    return this.researchArticleModel.aggregate([
+      {
+        $group: {
+          _id: '$primaryThematicAxis',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+  }
+
+  getArticleViewsSum() {
+    // sum the counter attribute from all research articles
+    return this.researchArticleModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          sum: { $sum: '$counter' },
+        },
+      },
+    ]);
+  }
+
+  getArticleDownloadsSum() {
+    // sum the counter attribute from all research articles
+    return this.researchArticleModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          sum: { $sum: '$downloadCounter' },
+        },
+      },
+    ]);
+  }
+
+  getTotalArticles() {
+    // get total articles
+    return this.researchArticleModel.countDocuments().exec();
+  }
 }

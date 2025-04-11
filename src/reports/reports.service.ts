@@ -9,14 +9,26 @@ export class ReportsService {
     private readonly practiceReportsRepository: PracticeReportsRepository,
   ) {}
   async getResearchArticlesReport() {
-    const [mostDownloadArticle, mostViewedArticle] = await Promise.all([
+    const [
+      mostDownloadArticle,
+      mostViewedArticle,
+      totalViews,
+      totalDownloads,
+      totalArticles,
+    ] = await Promise.all([
       this.researchArticleRepository.getMostDownloadedArticle(),
       this.researchArticleRepository.getMostViewedArticle(),
+      this.researchArticleRepository.getArticleViewsSum(),
+      this.researchArticleRepository.getArticleDownloadsSum(),
+      this.researchArticleRepository.getTotalArticles(),
     ]);
 
     return {
       mostViewed: mostViewedArticle[0],
       mostDownload: mostDownloadArticle[0],
+      totalViews: totalViews[0].sum,
+      totalDownloads: totalDownloads[0].sum,
+      totalArticles,
     };
   }
 
@@ -30,5 +42,9 @@ export class ReportsService {
       mostDownloaded: mostDownloadedReports[0],
       mostInteracted: mostInteractedReports[0],
     };
+  }
+
+  getThematicAxisReport() {
+    return this.researchArticleRepository.getThematicAxisCount();
   }
 }
