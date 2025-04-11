@@ -59,7 +59,7 @@ export class CreatePracticeReportDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  researchArticle?: Types.ObjectId;
+  researchArticle?: string;
 
   @ApiProperty()
   @IsOptional()

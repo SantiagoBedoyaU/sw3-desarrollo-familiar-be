@@ -36,4 +36,41 @@ export class PracticeReportsRepository extends BaseRepository<PracticeReport> {
       .limit(5)
       .exec();
   }
+
+  getThematicAxisCount() {
+    return this.practiceReportModel.aggregate([
+      {
+        $group: {
+          _id: '$primaryThematicAxis',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+  }
+
+  getPracticeViewsSum() {
+    return this.practiceReportModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          sum: { $sum: '$counter' },
+        },
+      },
+    ]);
+  }
+
+  getPracticeDownloadsSum() {
+    return this.practiceReportModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          sum: { $sum: '$downloadCounter' },
+        },
+      },
+    ]);
+  }
+
+  getTotalPractice() {
+    return this.practiceReportModel.countDocuments().exec();
+  }
 }

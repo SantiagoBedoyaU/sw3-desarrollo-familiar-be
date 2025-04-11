@@ -43,12 +43,8 @@ export class PracticeReport {
   @Prop({ type: Types.ObjectId, ref: 'EducationalInstitution', required: true })
   institution: Types.ObjectId;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ResearchArticle',
-    required: false,
-  })
-  relatedArticle?: ResearchArticle;
+  @Prop({ type: String, required: false })
+  researchArticle?: string;
 
   @Prop({
     required: true,

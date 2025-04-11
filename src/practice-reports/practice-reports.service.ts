@@ -76,7 +76,7 @@ export class PracticeReportsService extends BaseService<
       fileAddress: createPracticeReportDto.fileAddress,
       institution: new Types.ObjectId(institutionId),
       ...(researchArticle && {
-        researchArticle: new Types.ObjectId(researchArticle),
+        researchArticle: researchArticle,
       }),
     };
 
