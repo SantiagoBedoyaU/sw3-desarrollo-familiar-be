@@ -74,9 +74,9 @@ export class PracticeReportsService extends BaseService<
     const newReport: Omit<PracticeReport, '_id'> = {
       ...rest,
       fileAddress: createPracticeReportDto.fileAddress,
-      institution: new Types.ObjectId(institutionId),
+      institution: institutionId,
       ...(researchArticle && {
-        researchArticle: researchArticle,
+        researchArticle,
       }),
     };
 
