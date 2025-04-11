@@ -1,7 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
 import { Types } from 'mongoose';
-import { ResearchArticle } from 'src/research-articles/entities/research-article.entity';
 
 export type PracticeReportDocument = HydratedDocument<PracticeReport>;
 
