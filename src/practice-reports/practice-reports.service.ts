@@ -4,7 +4,6 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { Types } from 'mongoose';
 import { SupabaseService } from '../supabase/supabase.service';
 import { CreatePracticeReportDto } from './dto/create-practice-report.dto';
 import { UpdatePracticeReportDto } from './dto/update-practice-report.dto';
