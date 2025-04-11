@@ -17,4 +17,10 @@ export class ReportsController {
   getPracticeReportsReport() {
     return this.reportsService.getPracticeReportsReport();
   }
+
+  @Get('/thematic-axis')
+  @UseGuards(AuthGuard)
+  getThematicAxisReport() {
+    return this.reportsService.getThematicAxisReport();
+  }
 }
