@@ -1,7 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Types } from 'mongoose';
-import { ResearchArticle } from 'src/research-articles/entities/research-article.entity';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type PracticeReportDocument = HydratedDocument<PracticeReport>;
 
@@ -41,14 +39,14 @@ export class PracticeReport {
   secondaryThematicAxis?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'EducationalInstitution', required: true })
-  institution: Types.ObjectId;
+  institution: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ResearchArticle',
     required: false,
   })
-  relatedArticle?: ResearchArticle;
+  relatedArticle?: string;
 
   @Prop({
     required: true,

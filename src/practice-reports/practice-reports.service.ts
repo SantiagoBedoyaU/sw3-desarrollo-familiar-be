@@ -4,7 +4,6 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { Types } from 'mongoose';
 import { SupabaseService } from '../supabase/supabase.service';
 import { CreatePracticeReportDto } from './dto/create-practice-report.dto';
 import { UpdatePracticeReportDto } from './dto/update-practice-report.dto';
@@ -74,9 +73,9 @@ export class PracticeReportsService extends BaseService<
     const newReport: Omit<PracticeReport, '_id'> = {
       ...rest,
       fileAddress: createPracticeReportDto.fileAddress,
-      institution: new Types.ObjectId(institutionId),
+      institution: institutionId,
       ...(researchArticle && {
-        researchArticle: new Types.ObjectId(researchArticle),
+        researchArticle,
       }),
     };
 

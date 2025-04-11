@@ -33,18 +33,34 @@ export class ReportsService {
   }
 
   async getPracticeReportsReport() {
-    const [mostDownloadedReports, mostInteractedReports] = await Promise.all([
+    const [
+      mostDownloadedReports,
+      mostInteractedReports,
+      totalViews,
+      totalDownloads,
+      totalPracticeReports,
+    ] = await Promise.all([
       this.practiceReportsRepository.getMostDownloadedReports(),
       this.practiceReportsRepository.getMostInteractedReports(),
+      this.practiceReportsRepository.getPracticeViewsSum(),
+      this.practiceReportsRepository.getPracticeDownloadsSum(),
+      this.practiceReportsRepository.getTotalPractice(),
     ]);
 
     return {
       mostDownloaded: mostDownloadedReports[0],
       mostInteracted: mostInteractedReports[0],
+      totalViews: totalViews[0].sum,
+      totalDownloads: totalDownloads[0].sum,
+      totalPracticeReports: totalPracticeReports,
     };
   }
 
   getThematicAxisReport() {
     return this.researchArticleRepository.getThematicAxisCount();
+  }
+
+  getPracticeThematicAxisReport() {
+    return this.practiceReportsRepository.getThematicAxisCount();
   }
 }

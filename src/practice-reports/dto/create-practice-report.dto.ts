@@ -6,7 +6,6 @@ import {
   IsMongoId,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { Types } from 'mongoose';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePracticeReportDto {
@@ -59,7 +58,7 @@ export class CreatePracticeReportDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  researchArticle?: Types.ObjectId;
+  researchArticle?: string;
 
   @ApiProperty()
   @IsOptional()
