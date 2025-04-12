@@ -36,6 +36,7 @@ export class MailService {
       await this.mailerSend.email.send(emailParams);
       console.log('✅ Email sent successfully!');
     } catch (error) {
+      console.log(error);
       throw new Error('Failed to send email: ' + error.message);
     }
   }

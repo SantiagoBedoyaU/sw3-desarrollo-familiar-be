@@ -24,7 +24,6 @@ export class AuthService {
       throw new UnauthorizedException('invalid email or password');
     }
 
-    console.log(user);
     const accessToken = this.jwtService.sign({
       sub: user.id,
       role: user.role,
