@@ -9,7 +9,9 @@ describe('EducationalMaterialService', () => {
       providers: [EducationalMaterialService],
     }).compile();
 
-    service = module.get<EducationalMaterialService>(EducationalMaterialService);
+    service = module.get<EducationalMaterialService>(
+      EducationalMaterialService,
+    );
   });
 
   it('should be defined', () => {
