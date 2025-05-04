@@ -7,6 +7,7 @@ import { ResearchArticlesModule } from './research-articles/research-articles.mo
 import { EducationalInstitutionsModule } from './educational-institutions/educational-institutions.module';
 import { PracticeReportsModule } from './practice-reports/practice-reports.module';
 import { ReportsModule } from './reports/reports.module';
+import { EducationalMaterialModule } from './educational-material/educational-material.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReportsModule } from './reports/reports.module';
     EducationalInstitutionsModule,
     PracticeReportsModule,
     ReportsModule,
+    EducationalMaterialModule,
   ],
   controllers: [],
   providers: [],
