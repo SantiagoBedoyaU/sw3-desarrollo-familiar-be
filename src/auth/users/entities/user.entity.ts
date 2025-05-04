@@ -9,7 +9,15 @@ export enum Roles {
   Student,
 }
 
-@Schema()
+@Schema({
+  toJSON: {
+    transform(doc, ret) {
+      delete ret.__v;
+      delete ret.password;
+      return ret;
+    },
+  },
+})
 export class User {
   @Prop({ required: true })
   name: string;
