@@ -39,6 +39,15 @@ export class PracticeReportsService extends BaseService<
       throw new BadRequestException('now exists a report with this title');
     }
 
+    //check if institution exists
+    const institution = await this.educationalInstitutionsRepository.findOne({
+      _id: createPracticeReportDto.institutionId,
+    });
+
+    if (!institution) {
+      throw new NotFoundException('the institution does not exist');
+    }
+
     const [name, ext] = file.originalname.split('.');
     const filePath = this.sanitizeAndGetFilePath(
       createPracticeReportDto.primaryThematicAxis,
@@ -60,15 +69,6 @@ export class PracticeReportsService extends BaseService<
     }
 
     const { institutionId, researchArticle, ...rest } = createPracticeReportDto;
-
-    //check if institution exists
-    const institution = await this.educationalInstitutionsRepository.findOne({
-      _id: createPracticeReportDto.institutionId,
-    });
-
-    if (!institution) {
-      throw new NotFoundException('the institution does not exist');
-    }
 
     const newReport: Omit<PracticeReport, '_id'> = {
       ...rest,
