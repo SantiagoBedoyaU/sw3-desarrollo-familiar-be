@@ -33,7 +33,6 @@ export class UsersService extends BaseService<User, UsersRepository> {
     const usernamePart = email.split('@')[0];
     const randomNumbers = Math.floor(Math.random() * 1000);
     const password = `${usernamePart}${randomNumbers}`;
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 

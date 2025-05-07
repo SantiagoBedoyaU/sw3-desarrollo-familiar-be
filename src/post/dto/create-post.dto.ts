@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateBannerDto {
+export class CreatePostDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -17,7 +17,7 @@ export class CreateBannerDto {
   @ApiProperty({ type: String, format: 'date-time' })
   @IsOptional()
   @IsDateString()
-  eventDate?: string;
+  eventDate: Date;
 
   @ApiProperty()
   @IsString()
