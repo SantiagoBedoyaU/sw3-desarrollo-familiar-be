@@ -21,7 +21,7 @@ import { Roles } from 'src/auth/users/entities/user.entity';
 import { AllowedRoles } from 'src/auth/decorators/roles.decorator';
 import { PostQueryParams } from './dto/post-query-params.dto';
 
-@Controller('post')
+@Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
