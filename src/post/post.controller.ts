@@ -38,7 +38,12 @@ export class PostController {
 
   @Get()
   findAll(@Query() queryParams: PostQueryParams) {
-    return this.postService.findAll(queryParams);
+    const filter = {};
+    return this.postService.findAll(
+      filter,
+      queryParams.limit,
+      queryParams.page,
+    );
   }
 
   @Get(':id')

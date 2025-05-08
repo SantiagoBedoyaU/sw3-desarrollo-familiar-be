@@ -44,35 +44,4 @@ export class PostService extends BaseService<Posts, PostRepository> {
 
     return post;
   }
-
-  async findAll(queryParams: PostQueryParams) {
-    const query = {};
-
-    return this.postRepository.findAll(
-      query,
-      queryParams.limit,
-      queryParams.page,
-    );
-  }
-
-  async findOne(id: string): Promise<Posts> {
-    const post = await this.postRepository.findOne({ _id: id });
-    if (!post) {
-      throw new NotFoundException(`No se encontró el post con ID ${id}`);
-    }
-    return post;
-  }
-
-  async update(id: string, updatePostDto: Partial<Posts>) {
-    return this.postRepository.update({ _id: id }, updatePostDto);
-  }
-
-  async remove(id: string): Promise<Posts> {
-    const result = await this.postRepository.findOne({ _id: id });
-    if (!result) {
-      throw new NotFoundException('Post not found');
-    }
-    await this.postRepository.delete({ _id: id });
-    return result;
-  }
 }

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostController } from './post.controller';
 
-describe('BannerController', () => {
+describe('PostController', () => {
   let controller: PostController;
 
   beforeEach(async () => {
