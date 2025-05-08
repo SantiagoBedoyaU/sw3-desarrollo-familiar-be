@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { BaseService } from '../shared/service/base-service';
 import { Posts } from './entities/post.entity';
 import { PostRepository } from './post.repository';
