@@ -36,14 +36,52 @@ export class PostController {
     return this.postService.createPost(createPostDto, user);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  findAll(@Query() queryParams: PostQueryParams) {
-    const filter = {};
-    return this.postService.findAll(
+  async findAll(@Req() req: any, @Query() queryParams: PostQueryParams) {
+    const user = req.user;
+    const role = user?.role;
+
+    const filter: any = {};
+
+    if (!role || role === Roles.Student) {
+      filter.approved = true;
+    }
+
+    const result = await this.postService.findAll(
       filter,
       queryParams.limit,
       queryParams.page,
     );
+
+    if (result.data.length === 0) {
+      return {
+        message: 'No se encontraron publicaciones.',
+        showDefaultImage: true,
+      };
+    }
+
+    return result;
+  }
+
+  @Get('public')
+  async findAllPublic(@Query() queryParams: PostQueryParams) {
+    const filter = { approved: true };
+
+    const result = await this.postService.findAll(
+      filter,
+      queryParams.limit,
+      queryParams.page,
+    );
+
+    if (result.data.length === 0) {
+      return {
+        message: 'No se encontraron publicaciones.',
+        showDefaultImage: true,
+      };
+    }
+
+    return result;
   }
 
   @Get(':id')
