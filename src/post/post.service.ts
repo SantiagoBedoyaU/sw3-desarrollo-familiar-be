@@ -39,4 +39,8 @@ export class PostService extends BaseService<Posts, PostRepository> {
 
     return post;
   }
+
+  async findAll(filter: any, limit: number, page: number) {
+    return this.postRepository.findAll(filter, limit, page);
+  }
 }
