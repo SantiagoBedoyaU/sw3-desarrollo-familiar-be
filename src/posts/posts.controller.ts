@@ -11,7 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { PostService } from './post.service';
+import { PostService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Posts } from './entities/post.entity';
@@ -22,7 +22,7 @@ import { AllowedRoles } from 'src/auth/decorators/roles.decorator';
 import { PostQueryParams } from './dto/post-query-params.dto';
 
 @Controller('posts')
-export class PostController {
+export class PostsController {
   constructor(private readonly postService: PostService) {}
 
   @UseGuards(AuthGuard)

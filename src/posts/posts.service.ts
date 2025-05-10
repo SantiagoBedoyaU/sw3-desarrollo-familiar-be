@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { BaseService } from '../shared/service/base-service';
 import { Posts } from './entities/post.entity';
-import { PostRepository } from './post.repository';
+import { PostRepository } from './posts.repository';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Types } from 'mongoose';
 import { Roles } from 'src/auth/users/entities/user.entity';

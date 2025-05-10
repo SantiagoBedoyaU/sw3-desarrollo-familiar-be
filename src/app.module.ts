@@ -8,7 +8,7 @@ import { EducationalInstitutionsModule } from './educational-institutions/educat
 import { PracticeReportsModule } from './practice-reports/practice-reports.module';
 import { ReportsModule } from './reports/reports.module';
 import { EducationalMaterialModule } from './educational-material/educational-material.module';
-import { PostsModule } from './post/post.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
