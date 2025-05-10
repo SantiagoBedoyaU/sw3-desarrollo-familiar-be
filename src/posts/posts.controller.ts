@@ -14,7 +14,7 @@ import { Request } from 'express';
 import { PostService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Posts } from './entities/post.entity';
+import { Post as PostEntity } from './entities/post.entity';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { RolesGuard } from 'src/auth/guard/role.guard';
 import { Roles } from 'src/auth/users/entities/user.entity';
@@ -30,7 +30,7 @@ export class PostsController {
   async create(
     @Body() createPostDto: CreatePostDto,
     @Req() req: Request,
-  ): Promise<Posts> {
+  ): Promise<PostEntity> {
     const user = req['user'];
 
     return this.postService.createPost(createPostDto, user);
@@ -85,7 +85,7 @@ export class PostsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Posts> {
+  async findOne(@Param('id') id: string): Promise<PostEntity> {
     return this.postService.findOne(id);
   }
 
