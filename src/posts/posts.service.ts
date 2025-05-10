@@ -1,13 +1,13 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { BaseService } from '../shared/service/base-service';
-import { Posts } from './entities/post.entity';
+import { Post } from './entities/post.entity';
 import { PostRepository } from './posts.repository';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Types } from 'mongoose';
 import { Roles } from 'src/auth/users/entities/user.entity';
 
 @Injectable()
-export class PostService extends BaseService<Posts, PostRepository> {
+export class PostService extends BaseService<Post, PostRepository> {
   constructor(private readonly postRepository: PostRepository) {
     super(postRepository);
   }
@@ -15,7 +15,7 @@ export class PostService extends BaseService<Posts, PostRepository> {
   async createPost(
     createPostDto: CreatePostDto,
     user: { sub: string; role: number },
-  ): Promise<Posts> {
+  ): Promise<Post> {
     const { imageUrl, eventDate, description, externalLink } = createPostDto;
 
     if (eventDate && new Date(eventDate) < new Date()) {

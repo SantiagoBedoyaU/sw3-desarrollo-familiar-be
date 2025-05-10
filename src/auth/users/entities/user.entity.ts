@@ -17,6 +17,7 @@ export enum Roles {
       return ret;
     },
   },
+  versionKey: false,
 })
 export class User {
   @Prop({ required: true })

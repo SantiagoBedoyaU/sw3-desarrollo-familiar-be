@@ -40,4 +40,33 @@ export class MailService {
       throw new Error('Failed to send email: ' + error.message);
     }
   }
+
+  async sendRecoveryPasswordEmail(name: string, email: string, code: string) {
+    const emailParams = new EmailParams()
+      .setFrom({
+        email: this.configService.get<string>('EMAIL_FROM'),
+        name: 'Escuelas Familiares',
+      })
+      .setTo([new Recipient(email, name)])
+      .setSubject('Recupera tu contraseña')
+      .setTemplateId(this.configService.get<string>('RECOVERY_TEMPLATE_ID'))
+      .setPersonalization([
+        {
+          email: email,
+          data: {
+            name,
+            email,
+            code,
+          },
+        },
+      ]);
+
+    try {
+      await this.mailerSend.email.send(emailParams);
+      console.log('✅ Email sent successfully!');
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to send email: ' + error.message);
+    }
+  }
 }
