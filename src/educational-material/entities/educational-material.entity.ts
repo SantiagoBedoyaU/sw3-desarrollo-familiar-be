@@ -3,9 +3,11 @@ import { HydratedDocument } from 'mongoose';
 
 export type EducationalMaterialDocument = HydratedDocument<EducationalMaterial>;
 
-export enum EducationalMaterialCategory {
-  Written,
-  Audiovisual,
+export enum EducationalMaterialType {
+  Document = 'DOCUMENT',
+  Image = 'IMAGE',
+  Resource = 'RESOURCE',
+  Other = 'Other',
 }
 
 @Schema({
@@ -19,10 +21,25 @@ export class EducationalMaterial {
   title: string;
 
   @Prop({
-    enum: EducationalMaterialCategory,
+    enum: EducationalMaterialType,
     required: true,
   })
-  category: number;
+  type: string;
+
+  @Prop({})
+  description?: string;
+
+  @Prop({
+    type: Number,
+    required: true,
+  })
+  minAge: number;
+
+  @Prop({
+    type: Number,
+    required: true,
+  })
+  maxAge: number;
 
   @Prop({
     required: true,

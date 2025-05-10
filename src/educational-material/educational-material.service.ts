@@ -41,7 +41,7 @@ export class EducationalMaterialService extends BaseService<
     const ext = parts.pop();
     const name = parts.join('');
     const filePath = this.sanitizeAndGetFilePath(
-      createEducationalMaterialDto.category,
+      createEducationalMaterialDto.type,
       name,
       ext,
     );
@@ -94,7 +94,7 @@ export class EducationalMaterialService extends BaseService<
     }
   }
 
-  sanitizeAndGetFilePath(category: number, name: string, ext: string): string {
+  sanitizeAndGetFilePath(type: string, name: string, ext: string): string {
     const now = Date.now().toString();
     const sanitize = (text: string): string =>
       text
@@ -104,6 +104,7 @@ export class EducationalMaterialService extends BaseService<
         .replace(/Ñ/g, 'N') // Reemplaza Ñ
         .replace(/[^a-zA-Z0-9-_]/g, '_'); // Reemplaza cualquier otro carácter raro
     const fileName = sanitize(name);
-    return `${category}/${fileName}-${now}.${ext}`;
+    const saniType = sanitize(type);
+    return `${saniType}/${fileName}-${now}.${ext}`;
   }
 }
