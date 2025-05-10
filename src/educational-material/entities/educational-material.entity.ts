@@ -31,15 +31,13 @@ export class EducationalMaterial {
 
   @Prop({
     type: Number,
-    required: true,
   })
-  minAge: number;
+  minAge?: number;
 
   @Prop({
     type: Number,
-    required: true,
   })
-  maxAge: number;
+  maxAge?: number;
 
   @Prop({
     required: true,

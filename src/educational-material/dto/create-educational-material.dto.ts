@@ -26,14 +26,16 @@ export class CreateEducationalMaterialDto {
   description?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsNotEmpty()
   @IsNumberString()
-  minAge: number;
+  minAge?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNotEmpty()
   @IsNumberString()
-  maxAge: number;
+  maxAge?: number;
 
   fileAddress?: string;
 }
