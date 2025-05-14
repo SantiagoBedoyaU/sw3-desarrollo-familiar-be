@@ -102,7 +102,7 @@ export class PostsController {
       );
     }
 
-    updatePostDto.approved = false
+    updatePostDto.approved = false;
 
     await this.postService.update(id, updatePostDto);
     return { message: 'Post updated successfully' };
