@@ -35,7 +35,7 @@ export class UsersService extends BaseService<User, UsersRepository> {
     const password = `${usernamePart}${randomNumbers}`;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
+    
     const newUser = new User();
     newUser.name = name;
     newUser.email = email;

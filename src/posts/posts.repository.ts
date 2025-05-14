@@ -29,7 +29,4 @@ export class PostRepository extends BaseRepository<Post> {
     };
   }
 
-  async findById(id: string): Promise<PostDocument | null> {
-    return this.model.findById(id).exec();
-  }
 }

@@ -9,6 +9,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { PostService } from './posts.service';
@@ -91,6 +92,23 @@ export class PostsController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @AllowedRoles([Roles.Admin, Roles.Teacher])
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    const post = await this.postService.findOne(id)
+  
+    if(post.approved === false){
+      throw new BadRequestException('El post debe estar aprobado para editarlo');
+    }
+
+    await this.postService.update(id , updatePostDto);
+    return {message: 'Post updated successfully'};
+  }
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @AllowedRoles([Roles.Admin, Roles.Teacher])
   @Patch(':id/approve')
   async updateApproval(
     @Param('id') id: string,
@@ -113,7 +131,7 @@ export class PostsController {
   async remove(@Param('id') id: string) {
     await this.postService.remove(id);
     return {
-      message: 'the post was deleted successfully',
+      message: 'El post fue eliminado correctamente',
     };
   }
 }

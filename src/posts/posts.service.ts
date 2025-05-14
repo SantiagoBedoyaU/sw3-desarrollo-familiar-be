@@ -9,6 +9,7 @@ import { PostRepository } from './posts.repository';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Types } from 'mongoose';
 import { Roles } from 'src/auth/users/entities/user.entity';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService extends BaseService<Post, PostRepository> {
@@ -48,8 +49,9 @@ export class PostService extends BaseService<Post, PostRepository> {
     return this.postRepository.findAll(filter, limit, page);
   }
 
-  async approvePost(id: string): Promise<void> {
-    const post = await this.postRepository.findById(id);
+  async approvePost(id: string): Promise<Post> {
+    const post = await this.postRepository.findOne({ _id: id });
+
     if (!post) {
       throw new NotFoundException('Publicación no encontrada');
     }
@@ -58,7 +60,8 @@ export class PostService extends BaseService<Post, PostRepository> {
       throw new BadRequestException('La publicación ya está aprobada');
     }
 
-    post.approved = true;
-    await post.save();
+    return this.postRepository.update({ _id: id }, { approved: true });
   }
+
+
 }
