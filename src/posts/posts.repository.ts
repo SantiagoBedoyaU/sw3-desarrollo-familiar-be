@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, FilterQuery, SortOrder } from 'mongoose';
-import { Post, PostDocument } from './entities/post.entity';
+import { Post } from './entities/post.entity';
 import { BaseRepository } from 'src/shared/repository/base-repository';
 
 @Injectable()
@@ -28,5 +28,4 @@ export class PostRepository extends BaseRepository<Post> {
       currentPage: page,
     };
   }
-
 }

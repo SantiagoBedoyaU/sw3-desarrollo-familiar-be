@@ -9,7 +9,6 @@ import { PostRepository } from './posts.repository';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Types } from 'mongoose';
 import { Roles } from 'src/auth/users/entities/user.entity';
-import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService extends BaseService<Post, PostRepository> {
@@ -62,6 +61,4 @@ export class PostService extends BaseService<Post, PostRepository> {
 
     return this.postRepository.update({ _id: id }, { approved: true });
   }
-
-
 }

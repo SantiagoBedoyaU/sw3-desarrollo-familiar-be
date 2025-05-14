@@ -93,18 +93,17 @@ export class PostsController {
   @UseGuards(AuthGuard, RolesGuard)
   @AllowedRoles([Roles.Admin, Roles.Teacher])
   @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updatePostDto: UpdatePostDto,
-  ) {
-    const post = await this.postService.findOne(id)
-  
-    if(post.approved === false){
-      throw new BadRequestException('El post debe estar aprobado para editarlo');
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    const post = await this.postService.findOne(id);
+
+    if (post.approved === false) {
+      throw new BadRequestException(
+        'El post debe estar aprobado para editarlo',
+      );
     }
 
-    await this.postService.update(id , updatePostDto);
-    return {message: 'Post updated successfully'};
+    await this.postService.update(id, updatePostDto);
+    return { message: 'Post updated successfully' };
   }
 
   @UseGuards(AuthGuard, RolesGuard)
