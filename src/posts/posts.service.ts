@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { BaseService } from '../shared/service/base-service';
 import { Post } from './entities/post.entity';
 import { PostRepository } from './posts.repository';
@@ -42,5 +46,19 @@ export class PostService extends BaseService<Post, PostRepository> {
 
   async findAll(filter: any, limit: number, page: number) {
     return this.postRepository.findAll(filter, limit, page);
+  }
+
+  async approvePost(id: string): Promise<Post> {
+    const post = await this.postRepository.findOne({ _id: id });
+
+    if (!post) {
+      throw new NotFoundException('Publicación no encontrada');
+    }
+
+    if (post.approved) {
+      throw new BadRequestException('La publicación ya está aprobada');
+    }
+
+    return this.postRepository.update({ _id: id }, { approved: true });
   }
 }
