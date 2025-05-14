@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, FilterQuery, SortOrder } from 'mongoose';
-import { Post } from './entities/post.entity';
+import { Post, PostDocument } from './entities/post.entity';
 import { BaseRepository } from 'src/shared/repository/base-repository';
 
 @Injectable()
@@ -27,5 +27,9 @@ export class PostRepository extends BaseRepository<Post> {
       totalPages,
       currentPage: page,
     };
+  }
+
+  async findById(id: string): Promise<PostDocument | null> {
+    return this.model.findById(id).exec();
   }
 }

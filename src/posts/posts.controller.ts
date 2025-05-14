@@ -89,9 +89,22 @@ export class PostsController {
     return this.postService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(id, updatePostDto);
+  @UseGuards(AuthGuard, RolesGuard)
+  @AllowedRoles([Roles.Admin, Roles.Teacher])
+  @Patch(':id/approve')
+  async updateApproval(
+    @Param('id') id: string,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    const { approved } = updatePostDto;
+
+    if (approved === false) {
+      await this.postService.remove(id);
+      return { message: 'Publicación rechazada y eliminada correctamente' };
+    }
+
+    await this.postService.approvePost(id);
+    return { message: 'Publicación aprobada correctamente' };
   }
 
   @UseGuards(AuthGuard, RolesGuard)
