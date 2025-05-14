@@ -12,6 +12,8 @@ import { EducationalInstitutionsService } from './educational-institutions.servi
 import { CreateEducationalInstitutionDto } from './dto/create-educational-institution.dto';
 import { UpdateEducationalInstitutionDto } from './dto/update-educational-institution.dto';
 import { EducationalInstitutionQueryParams } from './dto/educational-institution-query-params.dto';
+import { FilterQuery } from 'mongoose';
+import { EducationalInstitution } from './entities/educational-institution.entity';
 
 @Controller('educational-institutions')
 export class EducationalInstitutionsController {
@@ -30,8 +32,17 @@ export class EducationalInstitutionsController {
 
   @Get()
   findAll(@Query() queryParams: EducationalInstitutionQueryParams) {
-    return this.educationalInstitutionsService.findAllWithPracticeReportCount(
-      queryParams,
+    const filter: FilterQuery<EducationalInstitution> = {};
+    if (queryParams.name) {
+      filter.title = {
+        $regex: queryParams.name,
+        $options: 'i',
+      };
+    }
+    return this.educationalInstitutionsService.findAll(
+      filter,
+      queryParams.limit,
+      queryParams.page,
     );
   }
 

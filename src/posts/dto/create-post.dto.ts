@@ -26,6 +26,5 @@ export class CreatePostDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsUrl()
   externalLink?: string;
 }
