@@ -48,11 +48,22 @@ export class EducationalMaterialController {
         $options: 'i',
       };
     }
-    if (queryParams.category) {
-      filter.category = {
-        $eq: queryParams.category,
+    if (queryParams.type) {
+      filter.type = {
+        $eq: queryParams.type,
       };
     }
+    if (queryParams.minAge) {
+      filter.minAge = {
+        $eq: queryParams.minAge,
+      };
+    }
+    if (queryParams.maxAge) {
+      filter.minAge = {
+        $eq: queryParams.maxAge,
+      };
+    }
+
     return this.educationalMaterialService.findAll(
       filter,
       queryParams.limit,
