@@ -57,7 +57,7 @@ describe('ResearchArticlesRepository', () => {
 
     const aggregateSpy = jest
       .spyOn(model, 'aggregate')
-      .mockResolvedValue(mockResponse); // Simulamos la respuesta
+      .mockResolvedValue(mockResponse);
 
     const result = await repository.getArticleViewsSum();
 
