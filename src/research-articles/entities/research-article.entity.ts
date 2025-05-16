@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { PracticeReport } from 'src/practice-reports/entities/practice-report.entity';
+import { ThematicAxis } from 'src/shared/enums/thematic-axis.enum';
 
 export type ResearchArticleDocument = HydratedDocument<ResearchArticle>;
 
@@ -27,13 +28,15 @@ export class ResearchArticle {
 
   @Prop({
     required: true,
+    enum: ThematicAxis,
   })
   primaryThematicAxis: string;
 
   @Prop({
-    required: true,
+    required: false,
+    enum: ThematicAxis,
   })
-  secondaryThematicAxis: string;
+  secondaryThematicAxis?: string;
 
   @Prop({
     required: true,

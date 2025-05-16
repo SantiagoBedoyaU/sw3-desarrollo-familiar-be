@@ -34,7 +34,8 @@ export class CreateResearchArticleDto {
 
   @ApiProperty()
   @IsString()
-  secondaryThematicAxis: string;
+  @IsOptional()
+  secondaryThematicAxis?: string;
 
   @ApiProperty()
   @IsNotEmpty()
